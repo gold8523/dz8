@@ -10,8 +10,6 @@ class api {
     public function get() {
 
         $id = $_REQUEST['id'];
-        echo "<pre>";
-        var_dump($_REQUEST);
 
         $data = Goods::find($id);
         if (!empty($data)) {
@@ -27,7 +25,6 @@ class api {
     public function post() {
 
         $id = $_REQUEST['id'];
-        var_dump($_REQUEST['id']);
 
         $faker = Faker\Factory::create();
 
@@ -48,16 +45,19 @@ class api {
     public function put() {
 
         $id = $_REQUEST['id'];
-        echo "<pre>";
-        var_dump($_REQUEST);
-        var_dump($_SERVER['REQUEST_METHOD']);
 
         $faker = Faker\Factory::create();
 
         $data = Goods::find($id);
         $data->goods_name = $faker->word;
         $data->save();
-        var_dump($data);
+        if (!empty($data)) {
+            http_response_code(200);
+            echo json_encode($data);
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'not found']);
+        }
 
 
     }
@@ -68,7 +68,13 @@ class api {
 
         $data = Goods::find($id);
         $data->delete();
-        var_dump($data);
+        if (!empty($data)) {
+            http_response_code(200);
+            echo json_encode($data);
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'not found']);
+        }
     }
 
 }

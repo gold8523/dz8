@@ -18,8 +18,10 @@ $('#but').on('click', function() {
     $.ajax({
         url: 'route.php',
         data: {
-            id: $('#getGoods').val()
+            id: $('#getGoods').val(),
+            name: "getGoods"
         },
+        method: "POST",
         error:function (xhr, ajaxOptions, thrownError) {
             $('.result').html(xhr.responseText);
         }
@@ -34,7 +36,8 @@ $('#post').on('click', function() {
     $.ajax({
         url: 'route.php',
         data: {
-            id: $('#getCategories').val()
+            id: $('#getCategories').val(),
+            name: "getCategories"
         },
         method: "POST",
         error:function (xhr, ajaxOptions, thrownError) {
@@ -50,9 +53,10 @@ $('#but1').on('click', function() {
     $.ajax({
         url: 'route.php',
         data: {
-            id: $('#putGood').val()
+            id: $('#putGoods').val(),
+            name: "putGoods"
         },
-        method: "PUT",
+        method: "POST",
         error:function (xhr, ajaxOptions, thrownError) {
             $('.result').html(xhr.responseText);
         }
@@ -66,9 +70,10 @@ $('#but2').on('click', function() {
     $.ajax({
         url: 'route.php',
         data: {
-            id: $('#delG').val()
+            id: $('#delGoods').val(),
+            name: "delGoods"
         },
-        method: "DELETE",
+        method: "POST",
         error:function (xhr, ajaxOptions, thrownError) {
             $('.result').html(xhr.responseText);
         }

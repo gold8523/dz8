@@ -20,12 +20,12 @@
 
 <br>
 <label>Укажите id товара
-    <input type="text" id="putGood">
+    <input type="text" id="putGoods">
     <button id="but1">Обновить товар</button>
 </label>
 <br>
 <label>Укажите id товара
-    <input type="text" id="delGood">
+    <input type="text" id="delGoods">
     <button id="but2">Удалить товар</button>
 </label>
 

@@ -1,20 +1,20 @@
 <?php
 require 'api.php';
 
-switch ($_SERVER['REQUEST_METHOD']) {
-    case "GET" :
+switch ($_REQUEST['name']) {
+    case "getGoods" :
         $api = new api();
         $api->get();
         break;
-    case "POST" :
+    case "getCategories" :
         $api = new api();
         $api->post();
         break;
-    case "PUT" :
+    case "putGoods" :
         $api = new api();
         $api->put();
         break;
-    case "DELETE" :
+    case "delGoods" :
         $api = new api();
         $api->delete();
         break;
