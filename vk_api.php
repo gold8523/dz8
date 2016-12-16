@@ -18,7 +18,7 @@ $ch = curl_init($vk[0]);
 
 curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$cfile = curl_file_create('/photos1', 'image/jpg', 'pes.jpg');
+$cfile = curl_file_create('photos1/', 'image/jpg', 'pes.jpg');
 
 curl_setopt($ch, CURLOPT_POSTFIELDS, array( 'photo' => $cfile));
 
