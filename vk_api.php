@@ -6,12 +6,11 @@ $token = 'c21989fb788405d092a0a558d578176577e3bf921d110680382be6c92af016b583fb04
 
 $upl = file_get_contents('https://api.vk.com/method/photos.getUploadServer?album_id=239145223&access_token=' . $token . '&v=5.60');
 $upl = json_decode($upl);
-print_r($upl);
 $url = $upl->response->upload_url;
 
 
-$fname = dirname(__FILE__) . '/photos1/rif.jpg';
-$cfile = new CURLFile($fname, 'image/jpg', 'rif.jpg');
+$fname = dirname(__FILE__) . '/photos1/more.jpg';
+$cfile = new CURLFile($fname, 'image/jpg', 'more.jpg');
 $file = [
     'photo' => $cfile
 ];
@@ -32,8 +31,15 @@ if ($result === FALSE) {
     curl_close ($ch);
     echo  "Result: " . $result;
 }
+echo "<br><pre>";
+$photo = json_decode($result);
 
-//$ph = json_decode($result);
-//print_r($ph->photo);
-//$a = stripslashes($ph->photo);
-//print_r($a);
+foreach ($photo as $item) {
+    $phot [] = $item;
+}
+print_r($phot);
+$photos = stripcslashes($phot[1]);
+
+$vksave = file_get_contents('https://api.vk.com/method/photos.saveWallPhoto?photo=' . $photos . '&server=' . $photo->server . '&hash=' . $photo->hash . '&access_token=' . $token);
+
+print_r($vksave);
