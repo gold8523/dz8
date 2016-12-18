@@ -1,18 +1,17 @@
 <?php
 //echo  1;
-$token = '41a6032dab484dfd6b9ba2bcd3d3a7957ad11b1a4c5806ab3a8128eb6accbbdbfd1013df07dc7bc26f9e3';
+$token = 'c21989fb788405d092a0a558d578176577e3bf921d110680382be6c92af016b583fb04bee2c35685c7af0';
 
-//https://oauth.vk.com/authorize?client_id=5780232&display=page&redirect_uri=http://dz8/vk_api.php&scope=photos&response_type=token&v=5.60
+//https://oauth.vk.com/authorize?client_id=5780232&display=page&redirect_uri=http://dz8/vk_api.php&scope=friends,photos,wall&response_type=token&v=5.60
 
-
-$upl = file_get_contents('https://api.vk.com/method/photos.getWallUploadServer?owner_id=2696830&access_token=41a6032dab484dfd6b9ba2bcd3d3a7957ad11b1a4c5806ab3a8128eb6accbbdbfd1013df07dc7bc26f9e3s://api.vk.com/method/photos.getUploadServer?album_id=239145223&access_token=41a6032dab484dfd6b9ba2bcd3d3a7957ad11b1a4c5806ab3a8128eb6accbbdbfd1013df07dc7bc26f9e3');
+$upl = file_get_contents('https://api.vk.com/method/photos.getUploadServer?album_id=239145223&access_token=' . $token . '&v=5.60');
 $upl = json_decode($upl);
-
+print_r($upl);
 $url = $upl->response->upload_url;
 
 
 $fname = dirname(__FILE__) . '/photos1/rif.jpg';
-$cfile = new CURLFile($fname, 'image/jpg');
+$cfile = new CURLFile($fname, 'image/jpg', 'rif.jpg');
 $file = [
     'photo' => $cfile
 ];
