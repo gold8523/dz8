@@ -1,16 +1,18 @@
 <?php
-//echo  1;
-$token = 'c21989fb788405d092a0a558d578176577e3bf921d110680382be6c92af016b583fb04bee2c35685c7af0';
 
-//https://oauth.vk.com/authorize?client_id=5780232&display=page&redirect_uri=http://dz8/vk_api.php&scope=friends,photos,wall&response_type=token&v=5.60
+$token = 'b81b990945d868f3fd867d0fa18497397f09cf745c60d66e10a73af414b0583cdb8560e5f9c73bead35f9';
 
-$upl = file_get_contents('https://api.vk.com/method/photos.getUploadServer?album_id=239145223&access_token=' . $token . '&v=5.60');
+//https://oauth.vk.com/authorize?client_id=5780232&display=page&redirect_uri=http://dz8/vk_api.php&scope=friends,photos,wall,offline&response_type=token&v=5.60
+
+$upl = file_get_contents('https://api.vk.com/method/photos.getWallUploadServer?access_token=' . $token . '&v=5.60');
 $upl = json_decode($upl);
 $url = $upl->response->upload_url;
+//print_r($upl);
 
 
-$fname = dirname(__FILE__) . '/photos1/more.jpg';
-$cfile = new CURLFile($fname, 'image/jpg', 'more.jpg');
+
+$fname = dirname(__FILE__) . '/photos1/clash.jpg';
+$cfile = new CURLFile($fname, 'image/jpg', 'rif.jpg');
 $file = [
     'photo' => $cfile
 ];
@@ -24,22 +26,23 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, $file);
 
 $result = curl_exec ($ch);
 
-if ($result === FALSE) {
-    echo "Error sending " . $fname .  " " . curl_error($ch);
-    curl_close ($ch);
-}else{
-    curl_close ($ch);
-    echo  "Result: " . $result;
-}
+//if ($result === FALSE) {
+//    echo "Error sending " . $fname .  " " . curl_error($ch);
+//    curl_close ($ch);
+//}else{
+//    curl_close ($ch);
+//    echo  "Result: " . $result;
+//}
 echo "<br><pre>";
 $photo = json_decode($result);
 
-foreach ($photo as $item) {
-    $phot [] = $item;
-}
-print_r($phot);
-$photos = stripcslashes($phot[1]);
+$photos = stripslashes($photo->photo);
 
-$vksave = file_get_contents('https://api.vk.com/method/photos.saveWallPhoto?photo=' . $photos . '&server=' . $photo->server . '&hash=' . $photo->hash . '&access_token=' . $token);
+$vksave = file_get_contents('https://api.vk.com/method/photos.saveWallPhoto?user_id=2696839&photo=' . $photos . '&server=' . $photo->server . '&hash=' . $photo->hash . '&access_token=' . $token);
+echo "<br>";
+var_dump($vksave);
+echo "<br>";
+$post_photo = json_decode($vksave);
 
-print_r($vksave);
+$post_wall = file_get_contents('https://api.vk.com/method/wall.post?attachments=' . $post_photo->response[0]->id . '&owner_id=-' . $post_photo->response[0]->owner_id . '&access_token=' . $token);
+var_dump($post_wall);
